@@ -4,18 +4,48 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import jp.wasabeef.richeditor.RichEditor;
+
+import static com.tencent.smtt.sdk.QbSdk.initX5Environment;
 
 public class MainActivity extends AppCompatActivity {
 
   private RichEditor mEditor;
   private TextView mPreview;
+  private TextView core;
+  private WebView sysWebview;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+//    initX5Environment(this,null);
     mEditor = (RichEditor) findViewById(R.id.editor);
+    core = (TextView) findViewById(R.id.core);
+    sysWebview = (WebView) findViewById(R.id.webview);
+    sysWebview.getSettings().setJavaScriptEnabled(true);
+    sysWebview.setWebViewClient(new WebViewClient(){
+      @Override
+      public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        view.loadUrl(url);//根据传入的参数在去加载新的网页
+        return true;//表示当前WebView可以处理打开新网页的请求，不用借助系统浏览器
+      }
+
+    });
+    sysWebview.loadUrl("http://www.baidu.com");
+
+    if(mEditor.getX5WebViewExtension()!=null){
+//      Toast.makeText(this,"x5 core",Toast.LENGTH_SHORT).show();
+      core.setText("x5 core");
+    }else{
+//      Toast.makeText(this,"sys core",Toast.LENGTH_SHORT).show();
+      core.setText("sys core");
+    }
+
     mEditor.setEditorHeight(200);
     mEditor.setEditorFontSize(22);
     mEditor.setEditorFontColor(Color.RED);

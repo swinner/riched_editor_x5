@@ -10,9 +10,12 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -101,6 +104,11 @@ public class RichEditor extends WebView {
     setWebChromeClient(new WebChromeClient());
     setWebViewClient(createWebviewClient());
     loadUrl(SETUP_HTML);
+  /*  if(this.getX5WebViewExtension()!=null){
+      Toast.makeText(context,"x5 core",Toast.LENGTH_SHORT).show();
+    }else{
+      Toast.makeText(context,"sys core",Toast.LENGTH_SHORT).show();
+    }*/
 
     applyAttributes(context, attrs);
   }
